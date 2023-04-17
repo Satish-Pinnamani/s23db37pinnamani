@@ -64,3 +64,36 @@ res.status(500);
 res.send(`{"error": ${err}}`);
 }
 };
+
+// for a specific Costume.
+exports.games_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await games.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+
+    // Handle Costume update form on PUT.
+exports.games_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+try {
+let toUpdate = await games.findById( req.params.id)
+// Do updates of properties
+if(req.body.game_name)
+toUpdate.game_name = req.body.game_name;
+if(req.body.number_of_players) toUpdate.number_of_players = req.body.number_of_players;
+if(req.body.game_price) toUpdate.game_price = req.body.game_price;
+let result = await toUpdate.save();
+console.log("Sucess " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+}
+};
