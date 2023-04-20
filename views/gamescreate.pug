@@ -1,0 +1,33 @@
+extends layout
+
+block content
+ h1= title
+
+ form(id='gamesForm', action="/resource/games", method="POST")
+   div.form-group
+        label.gamesAttr(for='game_name') game name
+        input#game_name(type='text', name='game_name')
+   div.form-group
+        label.gamesAttr(for='number_of_players') number of players
+        input#number_of_players(type='text', name='number_of_players')
+   div.form-group
+        label.gamesAttr(for='game_price') game price
+        input#game_price(type='number', name='game_price')
+        input(type="submit")
+ script.
+   document.forms['gamesForm'].addEventListener('submit', (event) => {
+    event.preventDefault();
+    // TODO do something here to show user that form is being submitted
+   fetch(event.target.action, {
+    method: 'POST',
+    body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+   }).then((resp) => {
+    return resp.json(); // or resp.text() or whatever the server sends
+   }).then((body) => {
+    alert("Save succeded")
+    // TODO handle body
+   }).catch((error) => {
+    // TODO handle error
+    alert("Save failed " + error )
+   });
+  });

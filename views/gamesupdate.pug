@@ -1,0 +1,39 @@
+extends layout
+block content
+    h1= title
+    - let game_id = toShow._id
+    - let game_name = toShow.Bull_Breed
+    - let number_of_players = toShow.Bull_Size
+    - let game_price = toShow.Bull_Value
+    div.row(class='mb-2')
+     div.mr-1 ID is
+     div #{game_id}
+    - let actionid = "/resource/games/" + game_id
+    form(id='gamesForm', action= actionid, method="PUT")
+     div.form-group
+        label.bullAttr(for='game_name') game name
+        input#game_name(type='text', name='game_name', value= game_name )
+     div.form-group
+        label.bullAttr(for='number_of_players') number of players
+        input#Bull_Size(type='text', name='number_of_players', value= number_of_players )
+     div.form-group
+        label.bullAttr(for='game_price') game price
+        input#Bull_Value(type='number', name='game_price', value= game_price )
+     input(type="submit")
+    script.
+     document.forms['gamesForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+     });

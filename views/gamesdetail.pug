@@ -1,0 +1,21 @@
+extends layout
+
+block content
+
+  - let game_id = toShow._id
+  - let game_name = toShow.game_name
+  - let number_of_players = toShow.number_of_players
+  - let game_price = toShow.game_price
+  div
+    div.row
+        div(class='gamesAttr mr-3') game id is:
+        div #{game_id}
+    div.row
+        div(class='gamesAttr mr-3') game name is:
+        div #{game_name}
+    div.row
+        div(class='gamesAttr mr-3') number of players is:
+        div #{number_of_players}
+    div.row
+        div(class='gamesAttr mr-3') game price is:
+        div #{game_price}
