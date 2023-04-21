@@ -2,14 +2,18 @@ extends layout
 
 block content
   h1= title
-  //- var games=[{game_name:"cricket",number_of_players:"11",game_price:500},{game_name:"football",number_of_players:"11",game_price:800},{game_name:"volleyball",number_of_players:"6",game_price:400}]
-  -let result =results
+  - let items = results;
   div(class="container-fluid")
-  div(class="row")
-   each g,index  in result
-    div(class="col-sm-2" onclick =`buy(${index})`) #{g.game_name}, #{g.number_of_players}, #{g.game_price}
-    script.
-        function buy(a)
-        {
-            alert(`You purchased Item ${a+1}`)
-        }
+    div(class="row")
+      each item,index in items
+        - let destination = `dispatch(\"/games/update?id=${item._id}\")`
+        div(class="col-sm-2" class="m-1")
+          h3 #{item.game_name}
+          p #{item.number_of_players}
+          p #{item.game_price}
+          button.btn( class="btn-primary ml-1", onclick= destination) Update
+  script.
+    function dispatch(path){
+      console.log(path);
+      window.location.href=path;
+    }
