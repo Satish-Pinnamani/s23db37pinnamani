@@ -3,15 +3,21 @@ extends layout
 block content
   h1= title
   - let items = results;
+  - let create = `dispatch(\"/games/create\")`
+  button.btn( class="btn-info", onclick= create) Add new games
   div(class="container-fluid")
     div(class="row")
       each item,index in items
         - let destination = `dispatch(\"/games/update?id=${item._id}\")`
+        - let detail = `dispatch(\"/soaps/detail/?id=${item._id}")`
+        - let deletesoaps = `dispatch(\"/soaps/delete/?id=${item._id}")`      
         div(class="col-sm-2" class="m-1")
           h3 #{item.game_name}
           p #{item.number_of_players}
           p #{item.game_price}
           button.btn( class="btn-primary ml-1", onclick= destination) Update
+          button.btn( class="btn-success", onclick= detail) Details
+          button.btn( class="btn-dark", onclick= deletesoaps) Delete
   script.
     function dispatch(path){
       console.log(path);
